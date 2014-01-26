@@ -1,5 +1,6 @@
 require 'ffmpeg-ffi/c/dictionary'
 require 'ffmpeg-ffi/c/input_format'
+require 'ffmpeg-ffi/c/io_context'
 
 module FFmpegFFI
   module C
@@ -9,7 +10,7 @@ module FFmpegFFI
         :iformat, InputFormat.by_ref,
         :oformat, :pointer,
         :priv_data, :pointer,
-        :pb, :pointer,
+        :pb, IOContext.by_ref,
         :ctx_flags, :int,
         :nb_streams, :int,
         :streams, :pointer,

@@ -36,6 +36,10 @@ module FFmpegFFI
       InputFormat.new(@ptr[:iformat])
     end
 
+    def pb
+      IOContext.new(@ptr[:pb])
+    end
+
     def nb_streams
       @ptr[:nb_streams]
     end
