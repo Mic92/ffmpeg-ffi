@@ -1,4 +1,4 @@
-require 'ffi'
+require 'ffmpeg-ffi/c/codec'
 
 module FFmpegFFI
   module C
@@ -7,7 +7,7 @@ module FFmpegFFI
         :av_class, :pointer,
         :log_level_offset, :int,
         :codec_type, :int,
-        :codec, :pointer,
+        :codec, Codec.by_ref,
         :codec_name, [:char, 32],
         :codec_id, :int,
         # and more...
