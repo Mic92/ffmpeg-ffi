@@ -11,6 +11,7 @@ module FFmpegFFI
       attach_function :avcodec_license, [], :string
 
       attach_function :avcodec_string, [:buffer_in, :int, CodecContext.by_ref, :int], :void
+      attach_function :avcodec_get_name, [:int], :string
     end
   end
 end

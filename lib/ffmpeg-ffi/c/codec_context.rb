@@ -9,6 +9,7 @@ module FFmpegFFI
         :codec_type, :int,
         :codec, :pointer,
         :codec_name, [:char, 32],
+        :codec_id, :int,
         # and more...
       )
     end
