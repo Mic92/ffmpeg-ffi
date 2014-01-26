@@ -15,5 +15,12 @@ module FFmpegFFI
     def long_name
       @ptr[:long_name]
     end
+
+    def self.find_decoder(codec_id)
+      ptr = C::AVCodec.avcodec_find_decoder(codec_id)
+      unless ptr.null?
+        new(ptr)
+      end
+    end
   end
 end

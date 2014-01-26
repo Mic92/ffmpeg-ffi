@@ -25,7 +25,9 @@ module FFmpegFFI
     end
 
     def codec
-      Codec.new(@ptr[:codec])
+      unless @ptr[:codec].null?
+        Codec.new(@ptr[:codec])
+      end
     end
 
     def codec_id
