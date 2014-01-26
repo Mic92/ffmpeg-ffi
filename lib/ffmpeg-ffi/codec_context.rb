@@ -37,5 +37,13 @@ module FFmpegFFI
     def codec_name
       C::AVCodec.avcodec_get_name(codec_id)
     end
+
+    def width
+      @ptr[:width]
+    end
+
+    def height
+      @ptr[:height]
+    end
   end
 end
