@@ -35,6 +35,16 @@ module FFmpegFFI
       InputFormat.new(@ptr[:iformat])
     end
 
+    def nb_streams
+      @ptr[:nb_streams]
+    end
+
+    def streams
+      @ptr[:streams].read_array_of_type(C::Stream.by_ref, :read_pointer, nb_streams).map do |s|
+        Stream.new(C::Stream.new(s))
+      end
+    end
+
     def filename
       @ptr[:filename]
     end
