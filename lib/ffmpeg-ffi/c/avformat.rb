@@ -17,6 +17,9 @@ module FFmpegFFI
       ]
 
       attach_function :av_register_all, [], :void
+      attach_function :avformat_version, [], :uint
+      attach_function :avformat_configuration, [], :string
+      attach_function :avformat_license, [], :string
       attach_function :avformat_open_input, [:pointer, :string, :pointer, :pointer], :int
       attach_function :avformat_close_input, [:pointer], :void
       attach_function :avformat_find_stream_info, [FormatContext.by_ref, :pointer], :int

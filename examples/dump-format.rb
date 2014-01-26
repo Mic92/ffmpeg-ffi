@@ -15,6 +15,11 @@ def dump_stream(i, stream)
   end
 end
 
+%w[avcodec avformat avutil].each do |s|
+  puts "#{s}: #{FFmpegFFI.send("#{s}_version").join('.')}: #{FFmpegFFI.send("#{s}_license")}"
+  puts "  #{FFmpegFFI.send("#{s}_configuration")}"
+end
+
 ARGV.each_with_index do |arg, i|
   ctx = FFmpegFFI::FormatContext.open_input(arg)
   ctx.find_stream_info

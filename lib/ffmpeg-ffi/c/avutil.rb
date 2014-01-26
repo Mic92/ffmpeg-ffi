@@ -6,6 +6,10 @@ module FFmpegFFI
       extend FFI::Library
       ffi_lib ['libavutil.so.52']
 
+      attach_function :avutil_version, [], :uint
+      attach_function :avutil_configuration, [], :string
+      attach_function :avutil_license, [], :string
+
       attach_function :av_strerror, [:int, :buffer_out, :size_t], :int
       attach_function :av_log_get_level, [], :int
       attach_function :av_log_set_level, [:int], :void

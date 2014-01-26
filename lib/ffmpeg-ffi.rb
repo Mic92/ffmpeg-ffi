@@ -20,11 +20,56 @@ module FFmpegFFI
   LOG_VERBOSE = 40
   LOG_DEBUG = 48
 
-  def self.log_level
-    C::AVUtil.av_log_get_level
-  end
+  module ClassMethods
+    def log_level
+      C::AVUtil.av_log_get_level
+    end
 
-  def self.log_level=(level)
-    C::AVUtil.av_log_set_level(level)
+    def log_level=(level)
+      C::AVUtil.av_log_set_level(level)
+    end
+
+    def avcodec_version
+      split_version(C::AVCodec.avcodec_version)
+    end
+
+    def avcodec_configuration
+      C::AVCodec.avcodec_configuration
+    end
+
+    def avcodec_license
+      C::AVCodec.avcodec_license
+    end
+
+    def avformat_version
+      split_version(C::AVFormat.avformat_version)
+    end
+
+    def avformat_configuration
+      C::AVFormat.avformat_configuration
+    end
+
+    def avformat_license
+      C::AVFormat.avformat_license
+    end
+
+    def avutil_version
+      split_version(C::AVUtil.avutil_version)
+    end
+
+    def avutil_configuration
+      C::AVUtil.avutil_configuration
+    end
+
+    def avutil_license
+      C::AVUtil.avutil_license
+    end
+
+    private
+
+    def split_version(version)
+      [version >> 16, (version >> 8) & 0xff, version & 0xff]
+    end
   end
+  extend ClassMethods
 end
