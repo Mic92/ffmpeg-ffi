@@ -15,6 +15,7 @@ module FFmpegFFI
         :filename, [:char, 1024],
         :start_time, :int64,
         :duration, :int64,
+        :bit_rate, :int,
         # and more...
       )
     end

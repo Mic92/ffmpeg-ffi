@@ -35,8 +35,26 @@ module FFmpegFFI
       InputFormat.new(@ptr[:iformat])
     end
 
+    def filename
+      @ptr[:filename]
+    end
+
+    def start_time
+      if @ptr[:start_time] != C::AVUtil::NOPTS_VALUE
+        @ptr[:start_time].to_r / C::AVUtil::TIME_BASE
+      end
+    end
+
     def duration
-      @ptr[:duration].to_r / C::AVUtil::TIME_BASE
+      if @ptr[:duration] != C::AVUtil::NOPTS_VALUE
+        @ptr[:duration].to_r / C::AVUtil::TIME_BASE
+      end
+    end
+
+    def bit_rate
+      if @ptr[:bit_rate] != C::AVUtil::NOPTS_VALUE
+        @ptr[:bit_rate]
+      end
     end
 
     def dump_format(index, url, is_output)

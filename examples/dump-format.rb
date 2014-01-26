@@ -6,9 +6,8 @@ ARGV.each_with_index do |arg, i|
   ctx.find_stream_info
   ctx.dump_format(i, arg, false)
 
-  puts arg
-  puts "  [#{ctx.iformat.name}] #{ctx.iformat.long_name}"
-  puts "  Duration: #{ctx.duration.to_f} (sec)"
+  puts "#{ctx.iformat.name} (#{ctx.iformat.long_name}) from #{ctx.filename}"
+  puts "  Duration: #{ctx.duration.to_f}, start: #{ctx.start_time.to_f.abs}, bitrate: #{ctx.bit_rate / 1000.0} kb/s"
 
   ctx.close_input
 end

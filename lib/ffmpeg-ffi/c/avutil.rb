@@ -10,6 +10,7 @@ module FFmpegFFI
       attach_function :av_log_get_level, [], :int
       attach_function :av_log_set_level, [:int], :void
 
+      NOPTS_VALUE = 0x8000000000000000
       TIME_BASE = 1000000
     end
   end
