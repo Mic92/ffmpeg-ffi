@@ -2,6 +2,9 @@ require "ffmpeg-ffi/version"
 require 'ffmpeg-ffi/c'
 
 module FFmpegFFI
+  autoload :Error, 'ffmpeg-ffi/error'
+  autoload :FormatContext, 'ffmpeg-ffi/format_context'
+
   LOG_QUIET = -8
   LOG_PANIC = 0
   LOG_FATAL = 8
