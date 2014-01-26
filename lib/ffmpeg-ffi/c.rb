@@ -7,6 +7,8 @@ module FFmpegFFI
 
     autoload :Dictionary, 'ffmpeg-ffi/c/dictionary'
     autoload :DictionaryEntry, 'ffmpeg-ffi/c/dictionary_entry'
+    autoload :Frac, 'ffmpeg-ffi/c/frac'
+    autoload :Rational, 'ffmpeg-ffi/c/rational'
     autoload :FormatContext, 'ffmpeg-ffi/c/format_context'
     autoload :InputFormat, 'ffmpeg-ffi/c/input_format'
     autoload :Program, 'ffmpeg-ffi/c/program'

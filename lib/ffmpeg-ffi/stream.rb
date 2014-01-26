@@ -1,3 +1,5 @@
+require 'ffmpeg-ffi'
+
 module FFmpegFFI
   class Stream
     attr_reader :ptr
@@ -12,6 +14,10 @@ module FFmpegFFI
 
     def index
       @ptr[:index]
+    end
+
+    def metadata
+      Dictionary.new(@ptr[:metadata])
     end
   end
 end

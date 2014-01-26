@@ -3,6 +3,12 @@ require 'ffmpeg-ffi'
 
 def dump_stream(i, stream)
   puts "    Stream ##{i}:#{stream.index}[0x#{stream.id.to_s(16)}]"
+  if stream.metadata.count > 0
+    puts "    Metadata:"
+    stream.metadata.each_entry('', FFmpegFFI::Dictionary::IGNORE_SUFFIX) do |entry|
+      puts "      #{entry.key}: #{entry.value.inspect}"
+    end
+  end
 end
 
 ARGV.each_with_index do |arg, i|
