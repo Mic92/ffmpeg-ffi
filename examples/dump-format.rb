@@ -13,5 +13,10 @@ ARGV.each_with_index do |arg, i|
     puts "    Stream ##{i}:#{stream.index}[0x#{stream.id.to_s(16)}]"
   end
 
+  video_stream = ctx.find_best_stream(:video)
+  audio_stream = ctx.find_best_stream(:audio)
+  puts "  Best video stream: #{video_stream.index}[0x#{video_stream.id.to_s(16)}]"
+  puts "  Best audio stream: #{audio_stream.index}[0x#{audio_stream.id.to_s(16)}]"
+
   ctx.close_input
 end

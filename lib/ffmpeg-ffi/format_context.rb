@@ -70,5 +70,13 @@ module FFmpegFFI
     def dump_format(index, url, is_output)
       C::AVFormat.av_dump_format(@ptr, index, url, is_output ? 1 : 0)
     end
+
+    def find_best_stream(type, wanted_stream_nb = -1, related_stream = -1)
+      r = C::AVFormat.av_find_best_stream(@ptr, type, wanted_stream_nb, related_stream, nil, 0)
+      if r < 0
+        raise Error.new(r)
+      end
+      streams[r]
+    end
   end
 end
