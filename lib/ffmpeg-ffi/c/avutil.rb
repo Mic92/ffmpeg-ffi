@@ -18,6 +18,8 @@ module FFmpegFFI
       attach_function :av_dict_get, [Dictionary.by_ref, :string, DictionaryEntry.by_ref, :int], DictionaryEntry.by_ref
       attach_function :av_dict_set, [:pointer, :string, :string, :int], :int
 
+      attach_function :av_get_media_type_string, [:int], :string
+
       NOPTS_VALUE = 0x8000000000000000
       TIME_BASE = 1000000
     end

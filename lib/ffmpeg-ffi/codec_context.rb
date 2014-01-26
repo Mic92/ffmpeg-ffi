@@ -15,5 +15,13 @@ module FFmpegFFI
         return buf.get_string(0)
       end
     end
+
+    def codec_type
+      @ptr[:codec_type]
+    end
+
+    def codec_type_string
+      C::AVUtil.av_get_media_type_string(codec_type)
+    end
   end
 end
