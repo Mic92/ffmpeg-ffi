@@ -8,6 +8,13 @@ module FFmpegFFI
         :iformat, InputFormat.by_ref,
         :oformat, :pointer,
         :priv_data, :pointer,
+        :pb, :pointer,
+        :ctx_flags, :int,
+        :nb_streams, :int,
+        :streams, :pointer,
+        :filename, [:char, 1024],
+        :start_time, :int64,
+        :duration, :int64,
         # and more...
       )
     end

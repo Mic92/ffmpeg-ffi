@@ -8,6 +8,7 @@ ARGV.each_with_index do |arg, i|
 
   puts arg
   puts "  [#{ctx.iformat.name}] #{ctx.iformat.long_name}"
+  puts "  Duration: #{ctx.duration.to_f} (sec)"
 
   ctx.close_input
 end

@@ -35,6 +35,10 @@ module FFmpegFFI
       InputFormat.new(@ptr[:iformat])
     end
 
+    def duration
+      @ptr[:duration].to_r / C::AVUtil::TIME_BASE
+    end
+
     def dump_format(index, url, is_output)
       C::AVFormat.av_dump_format(@ptr, index, url, is_output ? 1 : 0)
     end

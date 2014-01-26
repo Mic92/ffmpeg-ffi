@@ -9,6 +9,8 @@ module FFmpegFFI
       attach_function :av_strerror, [:int, :buffer_out, :size_t], :int
       attach_function :av_log_get_level, [], :int
       attach_function :av_log_set_level, [:int], :void
+
+      TIME_BASE = 1000000
     end
   end
 end
