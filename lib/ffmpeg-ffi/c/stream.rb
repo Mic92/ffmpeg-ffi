@@ -1,5 +1,6 @@
-require 'ffmpeg-ffi/c/frac'
+require 'ffmpeg-ffi/c/codec_context'
 require 'ffmpeg-ffi/c/dictionary'
+require 'ffmpeg-ffi/c/frac'
 require 'ffmpeg-ffi/c/rational'
 
 module FFmpegFFI
@@ -8,7 +9,7 @@ module FFmpegFFI
       layout(
         :index, :int,
         :id, :int,
-        :codec, :pointer,
+        :codec, CodecContext.by_ref,
         :priv_data, :pointer,
         :pts, Frac.by_value,
         :time_base, Rational.by_value,

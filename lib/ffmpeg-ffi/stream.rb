@@ -8,12 +8,16 @@ module FFmpegFFI
       @ptr = ptr
     end
 
+    def index
+      @ptr[:index]
+    end
+
     def id
       @ptr[:id]
     end
 
-    def index
-      @ptr[:index]
+    def codec
+      CodecContext.new(@ptr[:codec])
     end
 
     def metadata

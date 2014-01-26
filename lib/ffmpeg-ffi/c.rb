@@ -2,9 +2,11 @@ require 'ffi'
 
 module FFmpegFFI
   module C
+    autoload :AVCodec, 'ffmpeg-ffi/c/avcodec'
     autoload :AVFormat, 'ffmpeg-ffi/c/avformat'
     autoload :AVUtil, 'ffmpeg-ffi/c/avutil'
 
+    autoload :CodecContext, 'ffmpeg-ffi/c/codec_context'
     autoload :Dictionary, 'ffmpeg-ffi/c/dictionary'
     autoload :DictionaryEntry, 'ffmpeg-ffi/c/dictionary_entry'
     autoload :Frac, 'ffmpeg-ffi/c/frac'

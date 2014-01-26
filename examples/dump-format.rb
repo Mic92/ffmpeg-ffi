@@ -8,7 +8,7 @@ def dump_metadata(metadata, indent)
 end
 
 def dump_stream(i, stream)
-  puts "    Stream ##{i}:#{stream.index}[0x#{stream.id.to_s(16)}]"
+  puts "    Stream ##{i}:#{stream.index}[0x#{stream.id.to_s(16)}] #{stream.codec.string(false)}"
   if stream.metadata.count > 0
     puts "    Metadata:"
     dump_metadata(stream.metadata, 6)
