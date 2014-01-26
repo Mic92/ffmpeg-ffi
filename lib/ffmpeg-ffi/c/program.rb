@@ -1,4 +1,4 @@
-require 'ffi'
+require 'ffmpeg-ffi/c/dictionary'
 
 module FFmpegFFI
   module C
@@ -9,7 +9,7 @@ module FFmpegFFI
         :discard, :int,
         :stream_index, :pointer,
         :nb_stream_indexes, :uint,
-        :metadata, :pointer,
+        :metadata, Dictionary.by_ref,
         :program_num, :int,
         :pmt_pid, :int,
         :pcr_pid, :int,

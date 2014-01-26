@@ -1,3 +1,5 @@
+require 'ffmpeg-ffi'
+
 module FFmpegFFI
   class Program
     attr_reader :ptr
@@ -16,6 +18,10 @@ module FFmpegFFI
 
     def nb_stream_indexes
       @ptr[:nb_stream_indexes]
+    end
+
+    def metadata
+      Dictionary.new(@ptr[:metadata])
     end
 
     def program_num

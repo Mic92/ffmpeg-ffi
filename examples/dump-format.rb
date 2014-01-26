@@ -17,6 +17,13 @@ ARGV.each_with_index do |arg, i|
 
   ctx.programs.each do |program|
     puts "  Program #{program.id} (program_num #{program.program_num}, pmt_pid #{program.pmt_pid}, pcr_pid #{program.pcr_pid})"
+    if program.metadata.count > 0
+      puts "  Metadata:"
+      program.metadata.each_entry('', FFmpegFFI::Dictionary::IGNORE_SUFFIX) do |entry|
+        puts "    #{entry.key}: #{entry.value.inspect}"
+      end
+    end
+
     program.stream_indexes.each do |stream_id|
       dump_stream(i, ctx.streams[stream_id])
       printed[stream_id] = true

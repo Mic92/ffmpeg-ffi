@@ -5,6 +5,8 @@ module FFmpegFFI
     autoload :AVFormat, 'ffmpeg-ffi/c/avformat'
     autoload :AVUtil, 'ffmpeg-ffi/c/avutil'
 
+    autoload :Dictionary, 'ffmpeg-ffi/c/dictionary'
+    autoload :DictionaryEntry, 'ffmpeg-ffi/c/dictionary_entry'
     autoload :FormatContext, 'ffmpeg-ffi/c/format_context'
     autoload :InputFormat, 'ffmpeg-ffi/c/input_format'
     autoload :Program, 'ffmpeg-ffi/c/program'

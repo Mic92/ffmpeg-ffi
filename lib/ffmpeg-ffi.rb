@@ -2,6 +2,8 @@ require "ffmpeg-ffi/version"
 require 'ffmpeg-ffi/c'
 
 module FFmpegFFI
+  autoload :Dictionary, 'ffmpeg-ffi/dictionary'
+  autoload :DictionaryEntry, 'ffmpeg-ffi/dictionary_entry'
   autoload :Error, 'ffmpeg-ffi/error'
   autoload :FormatContext, 'ffmpeg-ffi/format_context'
   autoload :InputFormat, 'ffmpeg-ffi/input_format'
