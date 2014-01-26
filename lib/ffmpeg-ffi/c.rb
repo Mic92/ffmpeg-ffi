@@ -7,6 +7,7 @@ module FFmpegFFI
 
     autoload :FormatContext, 'ffmpeg-ffi/c/format_context'
     autoload :InputFormat, 'ffmpeg-ffi/c/input_format'
+    autoload :Program, 'ffmpeg-ffi/c/program'
     autoload :Stream, 'ffmpeg-ffi/c/stream'
 
     module FFIStructHash

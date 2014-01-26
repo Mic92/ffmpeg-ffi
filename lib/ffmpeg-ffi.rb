@@ -5,6 +5,7 @@ module FFmpegFFI
   autoload :Error, 'ffmpeg-ffi/error'
   autoload :FormatContext, 'ffmpeg-ffi/format_context'
   autoload :InputFormat, 'ffmpeg-ffi/input_format'
+  autoload :Program, 'ffmpeg-ffi/program'
   autoload :Stream, 'ffmpeg-ffi/stream'
 
   LOG_QUIET = -8

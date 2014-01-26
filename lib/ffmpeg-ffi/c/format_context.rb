@@ -16,6 +16,15 @@ module FFmpegFFI
         :start_time, :int64,
         :duration, :int64,
         :bit_rate, :int,
+        :packet_size, :uint,
+        :max_delay, :int,
+        :flags, :int,
+        :probesize, :uint,
+        :max_analyze_duration, :int,
+        :key, :pointer,
+        :keylen, :int,
+        :nb_programs, :uint,
+        :programs, :pointer,
         # and more...
       )
     end

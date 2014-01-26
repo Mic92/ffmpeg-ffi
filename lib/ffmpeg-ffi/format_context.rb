@@ -67,6 +67,16 @@ module FFmpegFFI
       end
     end
 
+    def nb_programs
+      @ptr[:nb_programs]
+    end
+
+    def programs
+      @ptr[:programs].read_array_of_type(C::Program.by_ref, :read_pointer, nb_programs).map do |p|
+        Program.new(C::Program.new(p))
+      end
+    end
+
     def dump_format(index, url, is_output)
       C::AVFormat.av_dump_format(@ptr, index, url, is_output ? 1 : 0)
     end
