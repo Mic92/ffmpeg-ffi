@@ -1,13 +1,17 @@
 #!/usr/bin/env ruby
 require 'ffmpeg-ffi'
 
+def dump_metadata(metadata, indent)
+  metadata.each_entry('', FFmpegFFI::Dictionary::IGNORE_SUFFIX) do |entry|
+    puts "#{' ' * indent}#{entry.key}: #{entry.value.inspect}"
+  end
+end
+
 def dump_stream(i, stream)
   puts "    Stream ##{i}:#{stream.index}[0x#{stream.id.to_s(16)}]"
   if stream.metadata.count > 0
     puts "    Metadata:"
-    stream.metadata.each_entry('', FFmpegFFI::Dictionary::IGNORE_SUFFIX) do |entry|
-      puts "      #{entry.key}: #{entry.value.inspect}"
-    end
+    dump_metadata(stream.metadata, 6)
   end
 end
 
@@ -17,6 +21,10 @@ ARGV.each_with_index do |arg, i|
   ctx.dump_format(i, arg, false)
 
   puts "#{ctx.iformat.name} (#{ctx.iformat.long_name}) from #{ctx.filename}"
+  if ctx.metadata.count > 0
+    puts "  Metadata:"
+    dump_metadata(ctx.metadata, 4)
+  end
   puts "  Duration: #{ctx.duration.to_f}, start: #{ctx.start_time.to_f.abs}, bitrate: #{ctx.bit_rate / 1000.0} kb/s"
 
   printed = {}
@@ -25,9 +33,7 @@ ARGV.each_with_index do |arg, i|
     puts "  Program #{program.id} (program_num #{program.program_num}, pmt_pid #{program.pmt_pid}, pcr_pid #{program.pcr_pid})"
     if program.metadata.count > 0
       puts "  Metadata:"
-      program.metadata.each_entry('', FFmpegFFI::Dictionary::IGNORE_SUFFIX) do |entry|
-        puts "    #{entry.key}: #{entry.value.inspect}"
-      end
+      dump_metadata(program.metadata, 4)
     end
 
     program.stream_indexes.each do |stream_id|

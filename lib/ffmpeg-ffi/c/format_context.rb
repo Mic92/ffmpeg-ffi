@@ -1,3 +1,4 @@
+require 'ffmpeg-ffi/c/dictionary'
 require 'ffmpeg-ffi/c/input_format'
 
 module FFmpegFFI
@@ -25,6 +26,14 @@ module FFmpegFFI
         :keylen, :int,
         :nb_programs, :uint,
         :programs, :pointer,
+        :video_codec_id, :int,
+        :audio_codec_id, :int,
+        :subtitle_codec_id, :int,
+        :max_index_size, :uint,
+        :max_picture_buffer, :uint,
+        :nb_chapters, :uint,
+        :chapters, :pointer,
+        :metadata, Dictionary.by_ref,
         # and more...
       )
     end

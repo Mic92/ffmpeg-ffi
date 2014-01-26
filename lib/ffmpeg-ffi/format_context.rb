@@ -1,3 +1,4 @@
+require 'ffmpeg-ffi'
 require 'ffmpeg-ffi/c'
 
 module FFmpegFFI
@@ -75,6 +76,10 @@ module FFmpegFFI
       @ptr[:programs].read_array_of_type(C::Program.by_ref, :read_pointer, nb_programs).map do |p|
         Program.new(C::Program.new(p))
       end
+    end
+
+    def metadata
+      Dictionary.new(@ptr[:metadata])
     end
 
     def dump_format(index, url, is_output)
