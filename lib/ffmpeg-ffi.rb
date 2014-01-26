@@ -4,6 +4,7 @@ require 'ffmpeg-ffi/c'
 module FFmpegFFI
   autoload :Error, 'ffmpeg-ffi/error'
   autoload :FormatContext, 'ffmpeg-ffi/format_context'
+  autoload :InputFormat, 'ffmpeg-ffi/input_format'
 
   LOG_QUIET = -8
   LOG_PANIC = 0

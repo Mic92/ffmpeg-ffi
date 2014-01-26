@@ -31,6 +31,10 @@ module FFmpegFFI
       self
     end
 
+    def iformat
+      InputFormat.new(@ptr[:iformat])
+    end
+
     def dump_format(index, url, is_output)
       C::AVFormat.av_dump_format(@ptr, index, url, is_output ? 1 : 0)
     end

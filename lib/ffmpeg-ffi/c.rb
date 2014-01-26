@@ -6,6 +6,7 @@ module FFmpegFFI
     autoload :AVUtil, 'ffmpeg-ffi/c/avutil'
 
     autoload :FormatContext, 'ffmpeg-ffi/c/format_context'
+    autoload :InputFormat, 'ffmpeg-ffi/c/input_format'
 
     module FFIStructHash
       def to_hash
