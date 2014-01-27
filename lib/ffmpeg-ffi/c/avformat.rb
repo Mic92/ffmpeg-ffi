@@ -1,5 +1,7 @@
+require 'ffmpeg-ffi/c/codec'
 require 'ffmpeg-ffi/c/format_context'
 require 'ffmpeg-ffi/c/io_context'
+require 'ffmpeg-ffi/c/stream'
 
 module FFmpeg
   module C
@@ -32,6 +34,8 @@ module FFmpeg
       attach_function :av_dump_format, [FormatContext.by_ref, :int, :string, :int], :void
 
       attach_function :avio_seek, [IOContext.by_ref, :int64, :int], :int64
+
+      attach_function :avformat_new_stream, [FormatContext.by_ref, Codec.by_ref], Stream.by_ref
 
       NOFILE = 0x0001
     end

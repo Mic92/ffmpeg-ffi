@@ -57,6 +57,13 @@ module FFmpeg
       OutputFormat.new(@ptr[:oformat])
     end
 
+    def new_stream(codec)
+      stream = C::AVFormat.avformat_new_stream(@ptr, codec)
+      unless stream.null?
+        Stream.new(stream)
+      end
+    end
+
     def pb
       IOContext.new(@ptr[:pb])
     end

@@ -12,8 +12,10 @@ iformat_ctx = FFmpeg::FormatContext.open_input(infile)
 iformat_ctx.find_stream_info
 
 oformat_ctx = FFmpeg::FormatContext.alloc_output(nil, nil, outfile)
-oformat = oformat_ctx.oformat
-p oformat.nofile?
+iformat_ctx.streams.each do |in_stream|
+  out_stream = oformat_ctx.new_stream(in_stream.codec.codec);
+  p out_stream.index
+end
 
 iformat_ctx.close_input
 oformat_ctx.free
