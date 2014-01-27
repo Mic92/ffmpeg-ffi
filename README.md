@@ -1,4 +1,4 @@
-# Ffmpeg::Ffi
+# ffmpeg-ffi
 
 TODO: Write a gem description
 
