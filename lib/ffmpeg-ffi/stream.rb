@@ -20,6 +20,10 @@ module FFmpeg
       CodecContext.new(@ptr[:codec])
     end
 
+    def time_base
+      @ptr[:time_base].to_r
+    end
+
     def metadata
       Dictionary.new(@ptr[:metadata])
     end

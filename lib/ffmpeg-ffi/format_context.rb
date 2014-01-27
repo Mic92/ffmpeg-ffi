@@ -72,6 +72,18 @@ module FFmpeg
       r
     end
 
+    def read_frame
+      ptr = FFI::MemoryPointer.new(C::Packet.by_value)
+      r = C::AVFormat.av_read_frame(@ptr, ptr)
+      if r == Error::EOF
+        nil
+      elsif r < 0
+        raise Error.new(r)
+      else
+        Packet.new(C::Packet.new(ptr))
+      end
+    end
+
     def pb
       IOContext.new(@ptr[:pb])
     end

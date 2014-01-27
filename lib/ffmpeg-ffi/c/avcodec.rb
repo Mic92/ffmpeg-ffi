@@ -16,6 +16,8 @@ module FFmpeg
       attach_function :avcodec_find_decoder, [:int], Codec.by_ref
       attach_function :avcodec_copy_context, [CodecContext.by_ref, CodecContext.by_ref], :int
 
+      attach_function :av_free_packet, [:pointer], :void
+
       FLAG_GLOBAL_HEADER = 0x00400000
     end
   end

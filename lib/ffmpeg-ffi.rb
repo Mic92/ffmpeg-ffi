@@ -1,5 +1,4 @@
 require "ffmpeg-ffi/version"
-require 'ffmpeg-ffi/c'
 
 module FFmpeg
   autoload :Codec, 'ffmpeg-ffi/codec'
@@ -11,6 +10,7 @@ module FFmpeg
   autoload :IOContext, 'ffmpeg-ffi/io_context'
   autoload :InputFormat, 'ffmpeg-ffi/input_format'
   autoload :OutputFormat, 'ffmpeg-ffi/output_format'
+  autoload :Packet, 'ffmpeg-ffi/packet'
   autoload :Program, 'ffmpeg-ffi/program'
   autoload :Stream, 'ffmpeg-ffi/stream'
 
@@ -76,3 +76,5 @@ module FFmpeg
   end
   extend ClassMethods
 end
+
+require 'ffmpeg-ffi/c'

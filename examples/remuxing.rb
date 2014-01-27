@@ -8,6 +8,21 @@ unless outfile
   exit 1
 end
 
+def log_packet(format_ctx, packet, tag)
+  time_base = format_ctx.streams[packet.stream_index].time_base
+  printf(
+    "%s: pts:%d pts_time:%.6f dts:%d dts_time:%.6f duration:%d duration_time:%.6f stream_index:%d\n",
+    tag,
+    packet.pts,
+    packet.pts * time_base,
+    packet.dts,
+    packet.dts * time_base,
+    packet.duration,
+    packet.duration * time_base,
+    packet.stream_index,
+  )
+end
+
 iformat_ctx = FFmpeg::FormatContext.open_input(infile)
 iformat_ctx.find_stream_info
 
@@ -25,6 +40,11 @@ unless oformat_ctx.oformat.nofile?
 end
 
 oformat_ctx.write_header
+
+while pkt = iformat_ctx.read_frame
+  log_packet(iformat_ctx, pkt, :in)
+  pkt.free
+end
 
 iformat_ctx.close_input
 oformat_ctx.free
