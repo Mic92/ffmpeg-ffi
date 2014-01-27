@@ -18,7 +18,10 @@ iformat_ctx.streams.each do |in_stream|
   if oformat_ctx.oformat.globalheader?
     out_stream.codec.global_header = true
   end
-  p out_stream.codec.ptr.to_hash
+end
+
+unless oformat_ctx.oformat.nofile?
+  oformat_ctx.pb = FFmpeg::IOContext.open(outfile, FFmpeg::IOContext::WRITE)
 end
 
 iformat_ctx.close_input

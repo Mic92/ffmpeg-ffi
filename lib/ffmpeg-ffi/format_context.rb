@@ -68,6 +68,10 @@ module FFmpeg
       IOContext.new(@ptr[:pb])
     end
 
+    def pb=(io_context)
+      @ptr[:pb] = io_context.ptr
+    end
+
     def nb_streams
       @ptr[:nb_streams]
     end

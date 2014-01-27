@@ -33,6 +33,7 @@ module FFmpeg
       attach_function :av_find_best_stream, [FormatContext.by_ref, :media_type, :int, :int, :pointer, :int], :int
       attach_function :av_dump_format, [FormatContext.by_ref, :int, :string, :int], :void
 
+      attach_function :avio_open, [:pointer, :string, :int], :int
       attach_function :avio_seek, [IOContext.by_ref, :int64, :int], :int64
 
       attach_function :avformat_new_stream, [FormatContext.by_ref, Codec.by_ref], Stream.by_ref
