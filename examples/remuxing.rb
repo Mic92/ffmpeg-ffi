@@ -24,5 +24,7 @@ unless oformat_ctx.oformat.nofile?
   oformat_ctx.pb = FFmpeg::IOContext.open(outfile, FFmpeg::IOContext::WRITE)
 end
 
+oformat_ctx.write_header
+
 iformat_ctx.close_input
 oformat_ctx.free

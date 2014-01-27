@@ -38,6 +38,8 @@ module FFmpeg
 
       attach_function :avformat_new_stream, [FormatContext.by_ref, Codec.by_ref], Stream.by_ref
 
+      attach_function :avformat_write_header, [FormatContext.by_ref, :pointer], :int
+
       NOFILE = 0x0001
       GLOBALHEADER = 0x0040
     end

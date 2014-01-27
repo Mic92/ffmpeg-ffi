@@ -64,6 +64,14 @@ module FFmpeg
       end
     end
 
+    def write_header(options = nil)
+      r = C::AVFormat.avformat_write_header(@ptr, options)
+      if r < 0
+        raise Error.new(r)
+      end
+      r
+    end
+
     def pb
       IOContext.new(@ptr[:pb])
     end
