@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require 'open3'
 require 'ffmpeg-ffi'
 
 def hd?(fname, n)
@@ -42,16 +41,23 @@ def cleanup(infile, outfile)
   end
 end
 
+def build_command(infile)
+  ['ffmpeg', '-loglevel', 'fatal', '-i', infile, '-acodec', 'copy', '-vcodec', 'copy']
+end
+
 def do_clean(infile, outfile, n)
-  cmd1 = ['tail', '-c', "+#{n*188}", infile]
-  cmd2 = ['ffmpeg', '-i', '-', '-acodec', 'copy', '-vcodec', 'copy']
   if n == 0
-    cmd2 += ['-ss', '0.5']
+    cmd_ffmpeg = build_command(infile) + ['-ss', '0.5', '-y', outfile]
+    puts cmd_ffmpeg.join(' ')
+    system(*cmd_ffmpeg)
+  else
+    require 'open3'
+    cmd_tail = ['tail', '-c', "+#{n*188}", infile]
+    cmd_ffmpeg = build_command('-') + ['-y', outfile]
+    puts cmd_tail.join(' ')
+    puts cmd_ffmpeg.join(' ')
+    Open3.pipeline(cmd_tail, cmd_ffmpeg)
   end
-  cmd2 += ['-y', outfile]
-  puts cmd1.join(' ')
-  puts cmd2.join(' ')
-  Open3.pipeline(cmd1, cmd2)
 end
 
 FFmpeg.log_level = FFmpeg::LOG_FATAL
