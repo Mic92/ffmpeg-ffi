@@ -18,10 +18,27 @@ module FFmpeg
       FormatContext.new(C::FormatContext.new(ptr.get_pointer(0)))
     end
 
+    def self.alloc_output(oformat, format_name, filename)
+      ptr = FFI::MemoryPointer.new(:pointer)
+      r = C::AVFormat.avformat_alloc_output_context2(ptr, oformat, format_name, filename)
+      if r < 0
+        raise Error.new(r)
+      end
+      ctx = ptr.get_pointer(0)
+      unless ctx.null?
+        FormatContext.new(C::FormatContext.new(ctx))
+      end
+    end
+
     def close_input
       ptr = FFI::MemoryPointer.new(C::FormatContext.by_ref)
       C::AVFormat.avformat_close_input(ptr)
       @ptr = ptr.get_pointer(0)
+    end
+
+    def free
+      C::AVFormat.avformat_free_context(@ptr)
+      @ptr = FFI::Pointer::NULL
     end
 
     def find_stream_info
