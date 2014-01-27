@@ -14,7 +14,11 @@ iformat_ctx.find_stream_info
 oformat_ctx = FFmpeg::FormatContext.alloc_output(nil, nil, outfile)
 iformat_ctx.streams.each do |in_stream|
   out_stream = oformat_ctx.new_stream(in_stream.codec.codec);
-  p out_stream.index
+  out_stream.codec.copy_from(in_stream.codec)
+  if oformat_ctx.oformat.globalheader?
+    out_stream.codec.global_header = true
+  end
+  p out_stream.codec.ptr.to_hash
 end
 
 iformat_ctx.close_input

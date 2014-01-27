@@ -38,12 +38,36 @@ module FFmpeg
       C::AVCodec.avcodec_get_name(codec_id)
     end
 
+    def flags
+      @ptr[:flags]
+    end
+
+    def flags=(flags)
+      @ptr[:flags] = flags
+    end
+
+    def global_header=(flag)
+      if flag
+        self.flags |= C::AVCodec::FLAG_GLOBAL_HEADER
+      else
+        self.flags &= ~C::AVCodec::FLAG_GLOBAL_HEADER
+      end
+    end
+
     def width
       @ptr[:width]
     end
 
     def height
       @ptr[:height]
+    end
+
+    def copy_from(codec_ctx)
+      r = C::AVCodec.avcodec_copy_context(@ptr, codec_ctx.ptr)
+      if r < 0
+        raise Error.new(r)
+      end
+      self
     end
   end
 end

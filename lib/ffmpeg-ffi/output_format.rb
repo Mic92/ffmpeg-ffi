@@ -20,6 +20,10 @@ module FFmpeg
       @ptr[:flags]
     end
 
+    def globalheader?
+      (flags & C::AVFormat::GLOBALHEADER) != 0
+    end
+
     def nofile?
       (flags & C::AVFormat::NOFILE) != 0
     end
