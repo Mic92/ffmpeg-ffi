@@ -1,6 +1,6 @@
 require 'ffmpeg-ffi/c/dictionary_entry'
 
-module FFmpegFFI
+module FFmpeg
   module C
     class Dictionary < FFI::Struct
       layout(

@@ -2,7 +2,7 @@
 require 'ffmpeg-ffi'
 
 def hd?(fname, n)
-  ctx = FFmpegFFI::FormatContext.open_input(fname)
+  ctx = FFmpeg::FormatContext.open_input(fname)
   ctx.pb.seek(n * 188, IO::SEEK_SET)
   ctx.find_stream_info
 
@@ -49,7 +49,7 @@ def do_clean(fname, n)
   puts "tail -c +#{n*188} #{fname} | ffmpeg -i - -acodec copy -vcodec copy #{gap} -y out.ts"
 end
 
-FFmpegFFI.log_level = FFmpegFFI::LOG_FATAL
+FFmpeg.log_level = FFmpeg::LOG_FATAL
 
 ARGV.each do |arg|
   cleanup(arg)

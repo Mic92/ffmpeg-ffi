@@ -1,6 +1,6 @@
 require 'ffi'
 
-module FFmpegFFI
+module FFmpeg
   module C
     autoload :AVCodec, 'ffmpeg-ffi/c/avcodec'
     autoload :AVFormat, 'ffmpeg-ffi/c/avformat'

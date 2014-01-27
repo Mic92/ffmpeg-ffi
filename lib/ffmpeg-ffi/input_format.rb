@@ -1,4 +1,4 @@
-module FFmpegFFI
+module FFmpeg
   class InputFormat
     attr_reader :ptr
 

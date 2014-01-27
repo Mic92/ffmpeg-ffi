@@ -1,7 +1,7 @@
 require 'ffmpeg-ffi'
 require 'ffmpeg-ffi/c'
 
-module FFmpegFFI
+module FFmpeg
   class FormatContext
     attr_reader :ptr
 

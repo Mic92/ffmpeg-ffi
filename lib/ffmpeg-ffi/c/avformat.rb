@@ -1,7 +1,7 @@
 require 'ffmpeg-ffi/c/format_context'
 require 'ffmpeg-ffi/c/io_context'
 
-module FFmpegFFI
+module FFmpeg
   module C
     module AVFormat
       extend FFI::Library

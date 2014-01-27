@@ -2,7 +2,7 @@
 require 'ffmpeg-ffi'
 
 def dump_metadata(metadata, indent)
-  metadata.each_entry('', FFmpegFFI::Dictionary::IGNORE_SUFFIX) do |entry|
+  metadata.each_entry('', FFmpeg::Dictionary::IGNORE_SUFFIX) do |entry|
     puts "#{' ' * indent}#{entry.key}: #{entry.value.inspect}"
   end
 end
@@ -16,14 +16,13 @@ def dump_stream(i, stream)
 end
 
 %w[avcodec avformat avutil].each do |s|
-  puts "#{s}: #{FFmpegFFI.send("#{s}_version").join('.')}: #{FFmpegFFI.send("#{s}_license")}"
-  puts "  #{FFmpegFFI.send("#{s}_configuration")}"
+  puts "#{s}: #{FFmpeg.send("#{s}_version").join('.')}: #{FFmpeg.send("#{s}_license")}"
+  puts "  #{FFmpeg.send("#{s}_configuration")}"
 end
 
 ARGV.each_with_index do |arg, i|
-  ctx = FFmpegFFI::FormatContext.open_input(arg)
+  ctx = FFmpeg::FormatContext.open_input(arg)
   ctx.find_stream_info
-  ctx.dump_format(i, arg, false)
 
   puts "#{ctx.iformat.name} (#{ctx.iformat.long_name}) from #{ctx.filename}"
   if ctx.metadata.count > 0

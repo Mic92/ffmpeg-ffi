@@ -1,6 +1,6 @@
 require 'ffmpeg-ffi/c'
 
-module FFmpegFFI
+module FFmpeg
   class DictionaryEntry
     attr_reader :ptr
 

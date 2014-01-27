@@ -1,7 +1,6 @@
-require 'ffmpeg-ffi'
 require 'ffmpeg-ffi/c'
 
-module FFmpegFFI
+module FFmpeg
   class IOContext
     attr_reader :ptr
 

@@ -1,3 +1,3 @@
-module FFmpegFFI
+module FFmpeg
   VERSION = "0.0.1"
 end

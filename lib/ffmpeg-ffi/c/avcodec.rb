@@ -1,7 +1,7 @@
 require 'ffmpeg-ffi/c/codec'
 require 'ffmpeg-ffi/c/format_context'
 
-module FFmpegFFI
+module FFmpeg
   module C
     module AVCodec
       extend FFI::Library

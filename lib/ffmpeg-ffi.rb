@@ -1,7 +1,7 @@
 require "ffmpeg-ffi/version"
 require 'ffmpeg-ffi/c'
 
-module FFmpegFFI
+module FFmpeg
   autoload :Codec, 'ffmpeg-ffi/codec'
   autoload :CodecContext, 'ffmpeg-ffi/codec_context'
   autoload :Dictionary, 'ffmpeg-ffi/dictionary'

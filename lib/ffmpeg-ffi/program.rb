@@ -1,6 +1,6 @@
 require 'ffmpeg-ffi'
 
-module FFmpegFFI
+module FFmpeg
   class Program
     attr_reader :ptr
 

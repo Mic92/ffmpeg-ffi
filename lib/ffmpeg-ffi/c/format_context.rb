@@ -2,7 +2,7 @@ require 'ffmpeg-ffi/c/dictionary'
 require 'ffmpeg-ffi/c/input_format'
 require 'ffmpeg-ffi/c/io_context'
 
-module FFmpegFFI
+module FFmpeg
   module C
     class FormatContext < FFI::Struct
       layout(

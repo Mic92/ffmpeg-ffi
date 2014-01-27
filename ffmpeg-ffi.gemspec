@@ -5,7 +5,7 @@ require 'ffmpeg-ffi/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "ffmpeg-ffi"
-  spec.version       = FFmpegFFI::VERSION
+  spec.version       = FFmpeg::VERSION
   spec.authors       = ["Kohei Suzuki"]
   spec.email         = ["eagletmt@gmail.com"]
   spec.summary       = %q{TODO: Write a short summary. Required.}

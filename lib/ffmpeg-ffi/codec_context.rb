@@ -1,6 +1,6 @@
 require 'ffmpeg-ffi'
 
-module FFmpegFFI
+module FFmpeg
   class CodecContext
     attr_reader :ptr
 

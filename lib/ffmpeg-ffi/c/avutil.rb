@@ -1,6 +1,6 @@
 require 'ffmpeg-ffi/c/dictionary'
 
-module FFmpegFFI
+module FFmpeg
   module C
     module AVUtil
       extend FFI::Library

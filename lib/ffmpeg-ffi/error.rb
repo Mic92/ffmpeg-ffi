@@ -1,6 +1,6 @@
 require 'ffmpeg-ffi/c'
 
-module FFmpegFFI
+module FFmpeg
   class Error < StandardError
     attr_reader :errno
     def initialize(errno)

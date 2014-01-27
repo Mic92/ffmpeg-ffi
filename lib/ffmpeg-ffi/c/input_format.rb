@@ -1,6 +1,6 @@
 require 'ffi'
 
-module FFmpegFFI
+module FFmpeg
   module C
     class InputFormat < FFI::Struct
       layout(

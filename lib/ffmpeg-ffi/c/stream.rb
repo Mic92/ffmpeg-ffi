@@ -3,7 +3,7 @@ require 'ffmpeg-ffi/c/dictionary'
 require 'ffmpeg-ffi/c/frac'
 require 'ffmpeg-ffi/c/rational'
 
-module FFmpegFFI
+module FFmpeg
   module C
     class Stream < FFI::Struct
       layout(

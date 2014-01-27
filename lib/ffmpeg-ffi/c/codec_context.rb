@@ -1,7 +1,7 @@
 require 'ffmpeg-ffi/c/codec'
 require 'ffmpeg-ffi/c/rational'
 
-module FFmpegFFI
+module FFmpeg
   module C
     class CodecContext < FFI::Struct
       layout(
