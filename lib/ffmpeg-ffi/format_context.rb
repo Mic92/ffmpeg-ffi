@@ -53,6 +53,10 @@ module FFmpeg
       InputFormat.new(@ptr[:iformat])
     end
 
+    def oformat
+      OutputFormat.new(@ptr[:oformat])
+    end
+
     def pb
       IOContext.new(@ptr[:pb])
     end

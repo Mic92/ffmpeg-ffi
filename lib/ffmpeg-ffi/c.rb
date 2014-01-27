@@ -14,6 +14,7 @@ module FFmpeg
     autoload :Frac, 'ffmpeg-ffi/c/frac'
     autoload :IOContext, 'ffmpeg-ffi/c/io_context'
     autoload :InputFormat, 'ffmpeg-ffi/c/input_format'
+    autoload :OutputFormat, 'ffmpeg-ffi/c/output_format'
     autoload :Program, 'ffmpeg-ffi/c/program'
     autoload :Rational, 'ffmpeg-ffi/c/rational'
     autoload :Stream, 'ffmpeg-ffi/c/stream'

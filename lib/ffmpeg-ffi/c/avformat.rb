@@ -32,6 +32,8 @@ module FFmpeg
       attach_function :av_dump_format, [FormatContext.by_ref, :int, :string, :int], :void
 
       attach_function :avio_seek, [IOContext.by_ref, :int64, :int], :int64
+
+      NOFILE = 0x0001
     end
   end
 end

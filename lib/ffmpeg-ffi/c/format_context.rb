@@ -1,5 +1,6 @@
 require 'ffmpeg-ffi/c/dictionary'
 require 'ffmpeg-ffi/c/input_format'
+require 'ffmpeg-ffi/c/output_format'
 require 'ffmpeg-ffi/c/io_context'
 
 module FFmpeg
@@ -8,7 +9,7 @@ module FFmpeg
       layout(
         :av_class, :pointer,
         :iformat, InputFormat.by_ref,
-        :oformat, :pointer,
+        :oformat, OutputFormat.by_ref,
         :priv_data, :pointer,
         :pb, IOContext.by_ref,
         :ctx_flags, :int,
