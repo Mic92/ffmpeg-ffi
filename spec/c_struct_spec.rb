@@ -4,12 +4,23 @@ require 'open3'
 require 'tmpdir'
 
 shared_examples_for 'a C struct' do
+  let(:c_name) { "AV#{described_class.name[/[^:]+\z/]}" }
+
   it 'has correct size' do
     real_size = gcc(<<-"EOS")
-printf("%zu\\n", sizeof(AV#{described_class.name[/[^:]+\z/]}));
+printf("%zu\\n", sizeof(#{c_name}));
 return 0;
     EOS
     expect(described_class.size).to eq(real_size.strip.to_i)
+  end
+
+  it 'has correct members' do
+    code = ["#{c_name} s;"]
+    described_class.members.each do |field|
+      code << "s.#{field};"
+    end
+    code << "return 0;"
+    expect { gcc(code.join("\n")) }.to_not raise_error
   end
 
   def gcc(code)
@@ -71,8 +82,7 @@ module FFmpeg::C
     end
 
     describe IOContext do
-      pending 'size does not match'
-      #it_behaves_like 'a C struct'
+      it_behaves_like 'a C struct'
     end
 
     describe IOInterruptCB do
