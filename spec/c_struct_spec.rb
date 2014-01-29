@@ -50,6 +50,10 @@ end
 
 describe 'C struct' do
   module FFmpeg::C
+    describe Codec do
+      it_behaves_like 'a C struct'
+    end
+
     describe CodecContext do
       it_behaves_like 'a C struct'
     end
