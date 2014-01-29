@@ -12,17 +12,19 @@ module FFmpeg
       C::AVUtil.av_dict_count(@ptr)
     end
 
-    MATCH_CASE      = 1
-    IGNORE_SUFFIX   = 2
-    DONT_STRDUP_KEY = 4
-    DONT_STRDUP_VAL = 8
-    DONT_OVERWRITE  = 16
-    APPEND          = 32
+    Flags = FFI::Enum.new([
+      :match_case     , 1,
+      :ignore_suffix  , 2,
+      :dont_strdup_key, 4,
+      :dont_strdup_val, 8,
+      :dont_overwrite , 16,
+      :append         , 32,
+    ])
 
-    def each_entry(key = '', flags = 0, &block)
+    def each_entry(key = '', flags, &block)
       entry = nil
       loop do
-        entry = C::AVUtil.av_dict_get(@ptr, key, entry, flags)
+        entry = C::AVUtil.av_dict_get(@ptr, key, entry, BitFlag.new(Flags, flags).to_i)
         break if entry.null?
         block.call(DictionaryEntry.new(entry))
       end

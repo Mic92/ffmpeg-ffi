@@ -2,7 +2,7 @@
 require 'ffmpeg-ffi'
 
 def dump_metadata(metadata, indent)
-  metadata.each_entry('', FFmpeg::Dictionary::IGNORE_SUFFIX) do |entry|
+  metadata.each_entry('', :ignore_suffix) do |entry|
     puts "#{' ' * indent}#{entry.key}: #{entry.value.inspect}"
   end
 end

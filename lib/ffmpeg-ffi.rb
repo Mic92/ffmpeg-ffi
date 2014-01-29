@@ -1,6 +1,7 @@
 require "ffmpeg-ffi/version"
 
 module FFmpeg
+  autoload :BitFlag, 'ffmpeg-ffi/bit_flag'
   autoload :Codec, 'ffmpeg-ffi/codec'
   autoload :CodecContext, 'ffmpeg-ffi/codec_context'
   autoload :Dictionary, 'ffmpeg-ffi/dictionary'

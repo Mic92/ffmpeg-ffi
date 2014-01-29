@@ -44,9 +44,6 @@ module FFmpeg
       attach_function :av_read_frame, [FormatContext.by_ref, :pointer], :int
       attach_function :av_interleaved_write_frame, [FormatContext.by_ref, Packet.by_ref], :int
       attach_function :av_write_trailer, [FormatContext.by_ref], :int
-
-      NOFILE = 0x0001
-      GLOBALHEADER = 0x0040
     end
   end
 end

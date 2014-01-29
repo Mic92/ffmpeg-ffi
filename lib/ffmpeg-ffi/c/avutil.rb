@@ -25,14 +25,6 @@ module FFmpeg
       TIME_BASE = 1000000
 
       # math
-      Rounding = FFI::Enum.new([
-        :zero, 0,
-        :inf, 1,
-        :down, 2,
-        :up, 3,
-        :near_inf, 5,
-        :pass_minmax, 8192,
-      ], :rounding)
       attach_function :av_rescale, [:int64, :int64, :int64], :int64
       attach_function :av_rescale_rnd, [:int64, :int64, :int], :int64
       attach_function :av_rescale_q, [:int64, C::Rational.by_value, C::Rational.by_value], :int64
