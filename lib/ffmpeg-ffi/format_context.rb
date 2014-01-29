@@ -93,6 +93,15 @@ module FFmpeg
       end
     end
 
+    def write_trailer
+      r = C::AVFormat.av_write_trailer(@ptr)
+      if r < 0
+        raise Error.new(r)
+      else
+        r
+      end
+    end
+
     def pb
       IOContext.new(@ptr[:pb])
     end

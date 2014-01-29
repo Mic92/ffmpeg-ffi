@@ -57,5 +57,7 @@ while pkt = iformat_ctx.read_frame
   pkt.free
 end
 
+oformat_ctx.write_trailer
+
 iformat_ctx.close_input
 oformat_ctx.free
