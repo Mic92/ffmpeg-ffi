@@ -74,6 +74,10 @@ describe 'C struct' do
       it_behaves_like 'a C struct'
     end
 
+    describe InputFormat do
+      it_behaves_like 'a C struct'
+    end
+
     describe Packet do
       it_behaves_like 'a C struct'
     end
