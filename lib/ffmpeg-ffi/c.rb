@@ -13,6 +13,7 @@ module FFmpeg
     autoload :FormatContext, 'ffmpeg-ffi/c/format_context'
     autoload :Frac, 'ffmpeg-ffi/c/frac'
     autoload :IOContext, 'ffmpeg-ffi/c/io_context'
+    autoload :IOInterruptCB, 'ffmpeg-ffi/c/io_interrupt_cb'
     autoload :InputFormat, 'ffmpeg-ffi/c/input_format'
     autoload :OutputFormat, 'ffmpeg-ffi/c/output_format'
     autoload :Packet, 'ffmpeg-ffi/c/packet'

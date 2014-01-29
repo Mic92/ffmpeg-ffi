@@ -62,7 +62,15 @@ describe 'C struct' do
       it_behaves_like 'a C struct'
     end
 
+    describe FormatContext do
+      it_behaves_like 'a C struct'
+    end
+
     describe Frac do
+      it_behaves_like 'a C struct'
+    end
+
+    describe IOInterruptCB do
       it_behaves_like 'a C struct'
     end
 
