@@ -2,19 +2,8 @@ require 'ffmpeg-ffi/c'
 
 module FFmpeg
   class OutputFormat
-    attr_reader :ptr
-
-    def initialize(ptr)
-      @ptr = ptr
-    end
-
-    def name
-      @ptr[:name]
-    end
-
-    def long_name
-      @ptr[:long_name]
-    end
+    include StructCommon
+    field_accessor :name, :long_name
 
     Flags = FFI::Enum.new([
       :nofile, 0x0001,

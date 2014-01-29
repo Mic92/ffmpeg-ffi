@@ -3,26 +3,21 @@ require 'ffmpeg-ffi/c'
 
 module FFmpeg
   class FormatContext
-    attr_reader :ptr
-
-    def initialize(ptr)
-      @ptr = ptr
-    end
+    include StructCommon
+    field_accessor :nb_streams, :filename, :nb_programs
 
     def self.open_input(path)
       ptr = FFI::MemoryPointer.new(C::FormatContext.by_ref)
-      r = C::AVFormat.avformat_open_input(ptr, path.to_s, nil, nil)
-      if r < 0
-        raise Error.new(r)
+      raise_averror do
+        C::AVFormat.avformat_open_input(ptr, path.to_s, nil, nil)
       end
       FormatContext.new(C::FormatContext.new(ptr.get_pointer(0)))
     end
 
     def self.alloc_output(oformat, format_name, filename)
       ptr = FFI::MemoryPointer.new(:pointer)
-      r = C::AVFormat.avformat_alloc_output_context2(ptr, oformat, format_name, filename)
-      if r < 0
-        raise Error.new(r)
+      raise_averror do
+        C::AVFormat.avformat_alloc_output_context2(ptr, oformat, format_name, filename)
       end
       ctx = ptr.get_pointer(0)
       unless ctx.null?
@@ -42,9 +37,8 @@ module FFmpeg
     end
 
     def find_stream_info
-      r = C::AVFormat.avformat_find_stream_info(@ptr, nil)
-      if r < 0
-        raise Error.new(r)
+      raise_averror do
+        C::AVFormat.avformat_find_stream_info(@ptr, nil)
       end
       self
     end
@@ -65,11 +59,9 @@ module FFmpeg
     end
 
     def write_header(options = nil)
-      r = C::AVFormat.avformat_write_header(@ptr, options)
-      if r < 0
-        raise Error.new(r)
+      raise_averror do
+        C::AVFormat.avformat_write_header(@ptr, options)
       end
-      r
     end
 
     def read_frame
@@ -77,28 +69,21 @@ module FFmpeg
       r = C::AVFormat.av_read_frame(@ptr, ptr)
       if r == Error::EOF
         nil
-      elsif r < 0
-        raise Error.new(r)
       else
+        raise_averror { r }
         Packet.new(C::Packet.new(ptr))
       end
     end
 
     def interleaved_write_frame(packet)
-      r = C::AVFormat.av_interleaved_write_frame(@ptr, packet.ptr)
-      if r < 0
-        raise Error.new(r)
-      else
-        r
+      raise_averror do
+        C::AVFormat.av_interleaved_write_frame(@ptr, packet.ptr)
       end
     end
 
     def write_trailer
-      r = C::AVFormat.av_write_trailer(@ptr)
-      if r < 0
-        raise Error.new(r)
-      else
-        r
+      raise_averror do
+        C::AVFormat.av_write_trailer(@ptr)
       end
     end
 
@@ -110,18 +95,10 @@ module FFmpeg
       @ptr[:pb] = io_context.ptr
     end
 
-    def nb_streams
-      @ptr[:nb_streams]
-    end
-
     def streams
       @ptr[:streams].read_array_of_type(C::Stream.by_ref, :read_pointer, nb_streams).map do |s|
         Stream.new(C::Stream.new(s))
       end
-    end
-
-    def filename
-      @ptr[:filename]
     end
 
     def start_time
@@ -142,10 +119,6 @@ module FFmpeg
       end
     end
 
-    def nb_programs
-      @ptr[:nb_programs]
-    end
-
     def programs
       @ptr[:programs].read_array_of_type(C::Program.by_ref, :read_pointer, nb_programs).map do |p|
         Program.new(C::Program.new(p))
@@ -161,9 +134,8 @@ module FFmpeg
     end
 
     def find_best_stream(type, wanted_stream_nb = -1, related_stream = -1)
-      r = C::AVFormat.av_find_best_stream(@ptr, type, wanted_stream_nb, related_stream, nil, 0)
-      if r < 0
-        raise Error.new(r)
+      r = raise_averror do
+        C::AVFormat.av_find_best_stream(@ptr, type, wanted_stream_nb, related_stream, nil, 0)
       end
       streams[r]
     end

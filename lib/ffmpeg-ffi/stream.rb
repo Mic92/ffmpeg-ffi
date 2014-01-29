@@ -2,19 +2,8 @@ require 'ffmpeg-ffi'
 
 module FFmpeg
   class Stream
-    attr_reader :ptr
-
-    def initialize(ptr)
-      @ptr = ptr
-    end
-
-    def index
-      @ptr[:index]
-    end
-
-    def id
-      @ptr[:id]
-    end
+    include StructCommon
+    field_accessor :index, :id
 
     def codec
       CodecContext.new(@ptr[:codec])

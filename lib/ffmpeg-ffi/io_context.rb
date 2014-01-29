@@ -3,11 +3,7 @@ require 'ffmpeg-ffi/c'
 
 module FFmpeg
   class IOContext
-    attr_reader :ptr
-
-    def initialize(ptr)
-      @ptr = ptr
-    end
+    include StructCommon
 
     READ = 1
     WRITE = 2
@@ -15,9 +11,8 @@ module FFmpeg
 
     def self.open(url, flag)
       ptr = FFI::MemoryPointer.new(:pointer)
-      r = C::AVFormat.avio_open(ptr, url, flag)
-      if r < 0
-        raise Error.new(r)
+      raise_averror do
+        C::AVFormat.avio_open(ptr, url, flag)
       end
       new(C::IOContext.new(ptr.read_pointer))
     end
@@ -27,11 +22,9 @@ module FFmpeg
     end
 
     def close
-      r = C::AVFormat.avio_close(@ptr)
-      if r < 0
-        raise Error.new(r)
+      raise_averror do
+        C::AVFormat.avio_close(@ptr)
       end
-      r
     end
   end
 end

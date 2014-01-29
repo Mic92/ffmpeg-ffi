@@ -2,11 +2,8 @@ require 'ffmpeg-ffi'
 
 module FFmpeg
   class CodecContext
-    attr_reader :ptr
-
-    def initialize(ptr)
-      @ptr = ptr
-    end
+    include StructCommon
+    field_accessor :codec_type, :codec_id, :width, :height
 
     def string(is_encode)
       size = 256
@@ -14,10 +11,6 @@ module FFmpeg
         C::AVCodec.avcodec_string(buf, size, @ptr, is_encode ? 1 : 0)
         return buf.get_string(0)
       end
-    end
-
-    def codec_type
-      @ptr[:codec_type]
     end
 
     def codec_type_string
@@ -28,10 +21,6 @@ module FFmpeg
       unless @ptr[:codec].null?
         Codec.new(@ptr[:codec])
       end
-    end
-
-    def codec_id
-      @ptr[:codec_id]
     end
 
     def codec_name
@@ -72,18 +61,9 @@ module FFmpeg
       self.flags = flags.set(:global_header, flag)
     end
 
-    def width
-      @ptr[:width]
-    end
-
-    def height
-      @ptr[:height]
-    end
-
     def copy_from(codec_ctx)
-      r = C::AVCodec.avcodec_copy_context(@ptr, codec_ctx.ptr)
-      if r < 0
-        raise Error.new(r)
+      raise_averror do
+        C::AVCodec.avcodec_copy_context(@ptr, codec_ctx.ptr)
       end
       self
     end

@@ -2,11 +2,7 @@ require 'ffmpeg-ffi/c'
 
 module FFmpeg
   class Dictionary
-    attr_reader :ptr
-
-    def initialize(ptr)
-      @ptr = ptr
-    end
+    include StructCommon
 
     def count
       C::AVUtil.av_dict_count(@ptr)

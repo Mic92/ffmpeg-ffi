@@ -15,6 +15,7 @@ module FFmpeg
   autoload :Packet, 'ffmpeg-ffi/packet'
   autoload :Program, 'ffmpeg-ffi/program'
   autoload :Stream, 'ffmpeg-ffi/stream'
+  autoload :StructCommon, 'ffmpeg-ffi/struct_common'
 
   LOG_QUIET = -8
   LOG_PANIC = 0
