@@ -25,5 +25,13 @@ module FFmpeg
     def seek(offset, whence)
       C::AVFormat.avio_seek(@ptr, offset, whence)
     end
+
+    def close
+      r = C::AVFormat.avio_close(@ptr)
+      if r < 0
+        raise Error.new(r)
+      end
+      r
+    end
   end
 end

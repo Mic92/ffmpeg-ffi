@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 require 'ffmpeg-ffi'
 
+# This example is a port of doc/examples/remuxing.c in FFmpeg.
+
 infile = ARGV[0]
 outfile = ARGV[1]
 unless outfile
@@ -58,6 +60,10 @@ while pkt = iformat_ctx.read_frame
 end
 
 oformat_ctx.write_trailer
+
+unless oformat_ctx.oformat.nofile?
+  oformat_ctx.pb.close
+end
 
 iformat_ctx.close_input
 oformat_ctx.free

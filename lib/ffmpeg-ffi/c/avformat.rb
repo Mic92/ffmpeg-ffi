@@ -36,6 +36,7 @@ module FFmpeg
 
       attach_function :avio_open, [:pointer, :string, :int], :int
       attach_function :avio_seek, [IOContext.by_ref, :int64, :int], :int64
+      attach_function :avio_close, [IOContext.by_ref], :int
 
       attach_function :avformat_new_stream, [FormatContext.by_ref, Codec.by_ref], Stream.by_ref
 
