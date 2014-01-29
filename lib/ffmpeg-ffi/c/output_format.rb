@@ -12,7 +12,14 @@ module FFmpeg
         :flags, :int,
         :codec_tag, :pointer,
         :priv_class, :pointer,
-        # and more...
+        :next, OutputFormat.by_ref,
+        :priv_data_size, :int,
+        :write_header, :pointer,
+        :write_packet, :pointer,
+        :write_trailer, :pointer,
+        :interleave_packet, :pointer,
+        :query_codec, :pointer,
+        :get_output_timestamp, :pointer,
       )
     end
   end
