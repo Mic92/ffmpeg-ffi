@@ -7,7 +7,6 @@ require 'ffmpeg-ffi/c/rational'
 module FFmpeg
   module C
     class Stream < FFI::Struct
-      FF_API_REFERENCE_DTS = FFmpeg.avformat_version[0] < 56
       MAX_REORDER_DELAY = 16
 
       fields = [
@@ -28,11 +27,7 @@ module FFmpeg
         :attached_pic, Packet.by_value,
         :info, :pointer,
         :pts_wrap_bits, :int,
-      ]
-      if FF_API_REFERENCE_DTS
-        fields += [:do_not_use, :int64]
-      end
-      fields += [
+        :reference_dts, :int64,
         :first_dts, :int64,
         :cur_dts, :int64,
         :last_IP_pts, :int64,
@@ -58,7 +53,6 @@ module FFmpeg
         :mux_ts_offset, :int64,
         :pts_wrap_reference, :int64,
         :pts_wrap_behavior, :int,
-        :update_initial_durations_done, :int,
       ]
 
       layout(*fields)

@@ -5,7 +5,7 @@ module FFmpeg
     class ProbeData < FFI::Struct
       layout(
         :filename, :string,
-        :buffer, :pointer,
+        :buf, :pointer,
         :buf_size, :int,
       )
     end
