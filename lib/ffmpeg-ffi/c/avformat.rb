@@ -2,7 +2,6 @@ require 'ffmpeg-ffi/c/codec'
 require 'ffmpeg-ffi/c/format_context'
 require 'ffmpeg-ffi/c/io_context'
 require 'ffmpeg-ffi/c/packet'
-require 'ffmpeg-ffi/c/stream'
 
 module FFmpeg
   module C
@@ -38,7 +37,7 @@ module FFmpeg
       attach_function :avio_seek, [IOContext.by_ref, :int64, :int], :int64
       attach_function :avio_close, [IOContext.by_ref], :int
 
-      attach_function :avformat_new_stream, [FormatContext.by_ref, Codec.by_ref], Stream.by_ref
+      attach_function :avformat_new_stream, [FormatContext.by_ref, Codec.by_ref], :pointer
 
       attach_function :avformat_write_header, [FormatContext.by_ref, :pointer], :int
       attach_function :av_read_frame, [FormatContext.by_ref, :pointer], :int

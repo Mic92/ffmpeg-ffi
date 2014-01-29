@@ -16,6 +16,7 @@ module FFmpeg
     autoload :InputFormat, 'ffmpeg-ffi/c/input_format'
     autoload :OutputFormat, 'ffmpeg-ffi/c/output_format'
     autoload :Packet, 'ffmpeg-ffi/c/packet'
+    autoload :ProbeData, 'ffmpeg-ffi/c/probe_data'
     autoload :Program, 'ffmpeg-ffi/c/program'
     autoload :Rational, 'ffmpeg-ffi/c/rational'
     autoload :Stream, 'ffmpeg-ffi/c/stream'

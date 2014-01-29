@@ -54,7 +54,7 @@ module FFmpeg
     def new_stream(codec)
       stream = C::AVFormat.avformat_new_stream(@ptr, codec)
       unless stream.null?
-        Stream.new(stream)
+        Stream.new(C::Stream.new(stream))
       end
     end
 
