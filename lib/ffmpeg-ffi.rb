@@ -10,6 +10,7 @@ module FFmpeg
   autoload :IOContext, 'ffmpeg-ffi/io_context'
   autoload :InputFormat, 'ffmpeg-ffi/input_format'
   autoload :OutputFormat, 'ffmpeg-ffi/output_format'
+  autoload :Math, 'ffmpeg-ffi/math'
   autoload :Packet, 'ffmpeg-ffi/packet'
   autoload :Program, 'ffmpeg-ffi/program'
   autoload :Stream, 'ffmpeg-ffi/stream'

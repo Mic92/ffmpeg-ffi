@@ -43,6 +43,16 @@ oformat_ctx.write_header
 
 while pkt = iformat_ctx.read_frame
   log_packet(iformat_ctx, pkt, :in)
+
+  in_stream = iformat_ctx.streams[pkt.stream_index]
+  out_stream = oformat_ctx.streams[pkt.stream_index]
+
+  pkt.pts = FFmpeg::Math.rescale(pkt.pts, in_stream.time_base, out_stream.time_base, [:near_inf, :pass_minmax])
+  pkt.dts = FFmpeg::Math.rescale(pkt.dts, in_stream.time_base, out_stream.time_base, [:near_inf, :pass_minmax])
+  pkt.duration = FFmpeg::Math.rescale(pkt.duration, in_stream.time_base, out_stream.time_base)
+  pkt.pos = -1
+  log_packet(oformat_ctx, pkt, :out)
+
   pkt.free
 end
 

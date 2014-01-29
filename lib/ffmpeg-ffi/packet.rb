@@ -17,8 +17,16 @@ module FFmpeg
       @ptr[:pts]
     end
 
+    def pts=(n)
+      @ptr[:pts] = n
+    end
+
     def dts
       @ptr[:dts]
+    end
+
+    def dts=(n)
+      @ptr[:dts] = n
     end
 
     def stream_index
@@ -27,6 +35,14 @@ module FFmpeg
 
     def duration
       @ptr[:duration]
+    end
+
+    def duration=(n)
+      @ptr[:duration] = n
+    end
+
+    def pos=(n)
+      @ptr[:pos] = n
     end
   end
 end
