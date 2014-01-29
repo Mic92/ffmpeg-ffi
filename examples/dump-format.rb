@@ -9,6 +9,10 @@ end
 
 def dump_stream(i, stream)
   puts "    Stream ##{i}:#{stream.index}[0x#{stream.id.to_s(16)}] #{stream.codec.string(false)}"
+  codec_ctx = stream.codec
+  codec = codec_ctx.codec || FFmpeg::Codec.find_decoder(codec_ctx.codec_id)
+  profile_name = codec ? codec.profile_name(codec_ctx.profile) : codec_ctx.profile
+  puts "    Stream ##{i}:#{stream.index}[0x#{stream.id.to_s(16)}] #{codec_ctx.media_type_string || 'unknown'}: #{codec_ctx.codec_name} (#{profile_name})"
   if stream.metadata.count > 0
     puts "    Metadata:"
     dump_metadata(stream.metadata, 6)

@@ -11,5 +11,9 @@ module FFmpeg
         new(ptr)
       end
     end
+
+    def profile_name(profile)
+      C::AVCodec.av_get_profile_name(@ptr, profile)
+    end
   end
 end

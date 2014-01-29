@@ -3,7 +3,7 @@ require 'ffmpeg-ffi'
 module FFmpeg
   class CodecContext
     include StructCommon
-    field_accessor :codec_type, :codec_id, :width, :height
+    field_accessor :codec_type, :codec_id, :width, :height, :profile
 
     def string(is_encode)
       size = 256
@@ -13,7 +13,7 @@ module FFmpeg
       end
     end
 
-    def codec_type_string
+    def media_type_string
       C::AVUtil.av_get_media_type_string(codec_type)
     end
 
@@ -26,7 +26,6 @@ module FFmpeg
     def codec_name
       C::AVCodec.avcodec_get_name(codec_id)
     end
-
 
     Flags = FFI::Enum.new([
       :input_preserved, 0x0100,

@@ -8,7 +8,7 @@ def hd?(fname, n)
 
   ctx.streams.any? do |stream|
     codec_ctx = stream.codec
-    next unless codec_ctx.codec_type_string == 'video'
+    next unless codec_ctx.media_type_string == 'video'
     next unless codec_ctx.codec_name == 'mpeg2video'
     [codec_ctx.width, codec_ctx.height] == [1440, 1080]
   end
