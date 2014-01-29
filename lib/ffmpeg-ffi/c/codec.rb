@@ -12,9 +12,9 @@ module FFmpeg
         :id, :int,
         :capabilities, :int,
         :supported_framerates, Rational.by_ref,
-        :pix_fmts, :int,
+        :pix_fmts, :pointer,
         :supported_samplerates, :pointer,
-        :sample_fmts, :int,
+        :sample_fmts, :pointer,
         :channel_layouts, :uint64,
       ]
       if FF_API_LOWRES

@@ -22,7 +22,7 @@ module FFmpeg
         :checksum_ptr, :pointer,
         :update_checksum, :pointer,
         :error, :int,
-        :read_pause, :int,
+        :read_pause, :pointer,
         :read_seek, :pointer,
         :seekable, :int,
         :maxsize, :int64,
