@@ -17,10 +17,14 @@ return 0;
   it 'has correct members' do
     code = ["#{c_name} s;"]
     described_class.members.each do |field|
-      code << "s.#{field};"
+      code << %Q{printf("#{field}=%zu\\n", sizeof(s.#{field}));}
     end
     code << "return 0;"
-    expect { gcc(code.join("\n")) }.to_not raise_error
+
+    expected_sizes = described_class.members.map do |field|
+      "#{field}=#{described_class.layout[field].size}"
+    end
+    expect(gcc(code.join("\n")).each_line.map(&:chomp)).to eq(expected_sizes)
   end
 
   def gcc(code)
