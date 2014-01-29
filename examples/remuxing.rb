@@ -53,6 +53,7 @@ while pkt = iformat_ctx.read_frame
   pkt.pos = -1
   log_packet(oformat_ctx, pkt, :out)
 
+  oformat_ctx.interleaved_write_frame(pkt)
   pkt.free
 end
 
