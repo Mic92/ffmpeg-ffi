@@ -48,8 +48,8 @@ return 0;
   end
 end
 
-describe 'C struct' do
-  module FFmpeg::C
+module FFmpeg::C
+  describe 'C struct' do
     describe Codec do
       it_behaves_like 'a C struct'
     end
@@ -68,6 +68,11 @@ describe 'C struct' do
 
     describe Frac do
       it_behaves_like 'a C struct'
+    end
+
+    describe IOContext do
+      pending 'size does not match'
+      #it_behaves_like 'a C struct'
     end
 
     describe IOInterruptCB do
