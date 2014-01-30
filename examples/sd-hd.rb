@@ -51,12 +51,58 @@ def do_clean(infile, outfile, n)
     puts cmd_ffmpeg.join(' ')
     system(*cmd_ffmpeg)
   else
-    require 'open3'
-    cmd_tail = ['tail', '-c', "+#{n*188}", infile]
-    cmd_ffmpeg = build_command('-') + ['-y', outfile]
-    puts cmd_tail.join(' ')
-    puts cmd_ffmpeg.join(' ')
-    Open3.pipeline(cmd_tail, cmd_ffmpeg)
+    iformat_ctx = FFmpeg::FormatContext.open_input(infile)
+    iformat_ctx.pb.seek(n*188, IO::SEEK_SET)
+    iformat_ctx.find_stream_info
+
+    # TODO: Need more precise guess.
+    in_video = iformat_ctx.find_best_stream(:video)
+    in_audio = iformat_ctx.find_best_stream(:audio)
+
+    oformat_ctx = FFmpeg::FormatContext.alloc_output(nil, nil, outfile)
+    out_video = oformat_ctx.new_stream(in_video.codec.codec)
+    out_audio = oformat_ctx.new_stream(in_audio.codec.codec)
+    out_video.codec.copy_from(in_video.codec)
+    out_audio.codec.copy_from(in_audio.codec)
+    if oformat_ctx.oformat.globalheader?
+      out_video.codec.global_header = true
+      out_audio.codec.global_header = true
+    end
+
+    stream_map = {
+      in_video.index => out_video,
+      in_audio.index => out_audio,
+    }
+
+    unless oformat_ctx.oformat.nofile?
+      oformat_ctx.pb = FFmpeg::IOContext.open(outfile, FFmpeg::IOContext::WRITE)
+    end
+
+    oformat_ctx.write_header
+    while packet = iformat_ctx.read_frame
+      in_stream = iformat_ctx.streams[packet.stream_index]
+      out_stream = stream_map[in_stream.index]
+      if out_stream
+        packet.stream_index = out_stream.index
+        packet.pts = FFmpeg::Math.rescale(packet.pts, in_stream.time_base, out_stream.time_base, [:near_inf, :pass_minmax])
+        packet.dts = FFmpeg::Math.rescale(packet.dts, in_stream.time_base, out_stream.time_base, [:near_inf, :pass_minmax])
+        packet.duration = FFmpeg::Math.rescale(packet.duration, in_stream.time_base, out_stream.time_base)
+        packet.pos = -1
+        oformat_ctx.interleaved_write_frame(packet)
+      end
+      packet.free
+    end
+    oformat_ctx.write_trailer
+  end
+ensure
+  if iformat_ctx
+    iformat_ctx.close_input
+  end
+  if oformat_ctx
+    unless oformat_ctx.oformat.nofile?
+      oformat_ctx.pb.close
+    end
+    oformat_ctx.free
   end
 end
 
