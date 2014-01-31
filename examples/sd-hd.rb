@@ -4,11 +4,7 @@ require 'ffmpeg-ffi'
 HD_WIDTH = 1440
 SD_WIDTH = 720
 
-def hd_and_sd(fname, n)
-  ctx = FFmpeg::FormatContext.open_input(fname)
-  ctx.pb.seek(n * 188, IO::SEEK_SET)
-  ctx.find_stream_info
-
+def hd_and_sd(ctx)
   has_hd, has_sd = false, false
   ctx.streams.each do |stream|
     codec_ctx = stream.codec
@@ -18,35 +14,73 @@ def hd_and_sd(fname, n)
     has_sd = has_sd || codec_ctx.width == SD_WIDTH
   end
   [has_hd, has_sd]
+end
+
+def has_stray_audio?(ctx)
+  # When an audio stream is found outside the programs, ffmpeg seems to fail
+  # with the following error message.
+  #
+  # [mpegts @ 0x???????] AAC bitstream not in ADTS format and extradata missing
+  # av_interleaved_write_frame(): Invalid data found when processing input
+  #
+  # We have to avoid this kind of error.
+
+  found_streams = {}
+  ctx.programs.each do |program|
+    video, audio = 0, 0
+    program.stream_indexes.each do |index|
+      found_streams[index] = true
+    end
+  end
+
+  ctx.streams.any? do |stream|
+    !found_streams.has_key?(stream.index) && stream.codec.media_type_string == 'audio'
+  end
+end
+
+def with_format_context(fname, n, &block)
+  ctx = FFmpeg::FormatContext.open_input(fname)
+  ctx.pb.seek(n * 188, IO::SEEK_SET)
+  ctx.find_stream_info
+  block.call(ctx)
 ensure
   ctx.close_input if ctx
 end
 
 def hd?(fname, n)
-  hd_and_sd(fname, n)[0]
+  with_format_context(fname, n) do |ctx|
+    hd_and_sd(ctx)[0]
+  end
+end
+
+def higher?(fname, n, hi_is_hd)
+  with_format_context(fname, n) do |ctx|
+    if has_stray_audio?(ctx)
+      $stderr.puts "#{fname}: Stray audio is found at #{n}*188"
+      return true
+    end
+
+    case hd_and_sd(ctx)
+    when [true, true]
+      # If both are found, proper cutpoint is higher.
+      true
+    when [true, false]
+      !hi_is_hd
+    when [false, true]
+      hi_is_hd
+    else
+      raise "#{fname}: Neither HD nor SD at #{mid}"
+    end
+  end
 end
 
 def bsearch(fname, lo, hi, hi_is_hd)
   while lo < hi
     mid = (lo + hi)/2
-    case hd_and_sd(fname, mid)
-    when [true, true]
-      # If both are found, proper cutpoint is later.
+    if higher?(fname, mid, hi_is_hd)
       lo = mid+1
-    when [true, false]
-      if hi_is_hd
-        hi = mid
-      else
-        lo = mid+1
-      end
-    when [false, true]
-      if hi_is_hd
-        lo = mid+1
-      else
-        hi = mid
-      end
     else
-      raise "#{fname}: Neither HD nor SD at #{mid}"
+      hi = mid
     end
   end
   lo
