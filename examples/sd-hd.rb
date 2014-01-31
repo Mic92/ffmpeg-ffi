@@ -1,28 +1,52 @@
 #!/usr/bin/env ruby
 require 'ffmpeg-ffi'
 
-def hd?(fname, n)
+HD_WIDTH = 1440
+SD_WIDTH = 720
+
+def hd_and_sd(fname, n)
   ctx = FFmpeg::FormatContext.open_input(fname)
   ctx.pb.seek(n * 188, IO::SEEK_SET)
   ctx.find_stream_info
 
-  ctx.streams.any? do |stream|
+  has_hd, has_sd = false, false
+  ctx.streams.each do |stream|
     codec_ctx = stream.codec
     next unless codec_ctx.media_type_string == 'video'
     next unless codec_ctx.codec_name == 'mpeg2video'
-    [codec_ctx.width, codec_ctx.height] == [1440, 1080]
+    has_hd = has_hd || codec_ctx.width == HD_WIDTH
+    has_sd = has_sd || codec_ctx.width == SD_WIDTH
   end
+  [has_hd, has_sd]
 ensure
   ctx.close_input if ctx
+end
+
+def hd?(fname, n)
+  hd_and_sd(fname, n)[0]
 end
 
 def bsearch(fname, lo, hi, hi_is_hd)
   while lo < hi
     mid = (lo + hi)/2
-    if hd?(fname, mid) == hi_is_hd
-      hi = mid
-    else
+    case hd_and_sd(fname, mid)
+    when [true, true]
+      # If both are found, proper cutpoint is later.
       lo = mid+1
+    when [true, false]
+      if hi_is_hd
+        hi = mid
+      else
+        lo = mid+1
+      end
+    when [false, true]
+      if hi_is_hd
+        lo = mid+1
+      else
+        hi = mid
+      end
+    else
+      raise "#{fname}: Neither HD nor SD at #{mid}"
     end
   end
   lo
