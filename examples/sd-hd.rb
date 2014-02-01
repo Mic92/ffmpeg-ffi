@@ -113,9 +113,8 @@ def do_clean(infile, outfile, n)
     iformat_ctx.pb.seek(n*188, IO::SEEK_SET)
     iformat_ctx.find_stream_info
 
-    # TODO: Need more precise guess.
-    in_video = iformat_ctx.find_best_stream(:video)
     in_audio = iformat_ctx.find_best_stream(:audio)
+    in_video = iformat_ctx.find_best_stream(:video, -1, in_audio.index)
 
     oformat_ctx = FFmpeg::FormatContext.alloc_output(nil, nil, outfile)
     out_video = oformat_ctx.new_stream(in_video.codec.codec)
