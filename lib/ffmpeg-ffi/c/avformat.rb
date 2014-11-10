@@ -7,7 +7,7 @@ module FFmpeg
   module C
     module AVFormat
       extend FFI::Library
-      ffi_lib ['libavformat.so.55']
+      ffi_lib ['libavformat.so']
 
       enum :media_type, [
         :unknown, -1,

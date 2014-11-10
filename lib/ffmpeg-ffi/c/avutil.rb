@@ -5,7 +5,7 @@ module FFmpeg
   module C
     module AVUtil
       extend FFI::Library
-      ffi_lib ['libavutil.so.52']
+      ffi_lib ['libavutil.so']
 
       attach_function :avutil_version, [], :uint
       attach_function :avutil_configuration, [], :string

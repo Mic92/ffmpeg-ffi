@@ -5,7 +5,7 @@ module FFmpeg
   module C
     module AVCodec
       extend FFI::Library
-      ffi_lib ['libavcodec.so.55']
+      ffi_lib ['libavcodec.so']
 
       attach_function :avcodec_version, [], :uint
       attach_function :avcodec_configuration, [], :string
